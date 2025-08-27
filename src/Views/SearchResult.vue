@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import SearchBar from "../components/SearchBar.vue";
 import WebsiteResult from "../components/WebsiteResult.vue";
+import DarkModeButton from "../components/DarkModeButton.vue";
 
 </script>
 
 <template>
 <section class="flex flex-col gap-4 w-full h-full px-2 py-4">
-  <SearchBar />
-  <h1 class="text-stone-500 text-2xl font-bold">Result :</h1>
+  <section class="flex w-full justify-between align-middle px-2">
+    <SearchBar />
+    <DarkModeButton />
+  </section>
   <section class="flex justify-around flex-wrap gap-x-4 gap-y-2 px-4 overflow-x-hidden">
     <WebsiteResult
         title="Lorem ipsum dolor sit amet, consectetur adipiscing elit"

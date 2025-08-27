@@ -8,6 +8,25 @@ export interface Rule {
 
 export const rules: Array<Rule> = [
     {
+        identifier: "google",
+        aliases: [
+            "goo"
+        ],
+        name: "Google Search",
+        url: "https://www.google.com/search?q={}",
+        urlWithNoArg: "https://www.google.com/"
+    },
+    {
+        identifier: "duckduckgo",
+        aliases: [
+            "duck",
+            "duckgo"
+        ],
+        name: "Duckduckgo Search",
+        url: "https://duckduckgo.com/?t=ffab&q={}",
+        urlWithNoArg: "https://duckduckgo.com/?t=ffab"
+    },
+    {
         identifier: "youtube",
         name: "Youtube Search",
         aliases: [
@@ -24,17 +43,18 @@ export const rules: Array<Rule> = [
             "gt"
         ],
         name: "Github",
-        url: "https://github.com/search?q={}",
+        url: "https://github.com/search?q={}&type=repositories",
         urlWithNoArg: "https://github.com/trending"
     },
     {
-        identifier: "repo",
+        identifier: "repository",
         aliases: [
+            "repo",
             "rep",
             "re"
         ],
         name: "Github repository",
-        url: "https://www.github.com/search?q={}&type=repositories",
+        url: "https://github.com/LouisDerveloy?tab=repositories&q={}&type&language&sort",
         urlWithNoArg: "https://www.github.com/LouisDerveloy?tab=repositories"
     },
     {
@@ -59,14 +79,45 @@ export const rules: Array<Rule> = [
         identifier: "wikipediafr",
         aliases: [
             "wikifr",
+            "wifr"
         ],
-        name: "Wikipedia",
+        name: "Wikipedia Français",
         url: "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=test",
         urlWithNoArg: "https://fr.wikipedia.org/"
     },
-    //TODO: wikipedia english version
-    //TODO: Stackoverflow
-    //TODO: Reddit
+    {
+        identifier: "wikipedia",
+        aliases: [
+            "wiki",
+            "wikien",
+            "wien"
+        ],
+        name: "Wikipedia",
+        url: "https://en.wikipedia.org/w/index.php?search={}&title=Special%3ASearch&ns0=1",
+        urlWithNoArg: "https://en.wikipedia.org/"
+    },
+    {
+        identifier: "stackoverflow",
+        aliases: [
+            "stack",
+            "overflow",
+            "bug"
+        ],
+        name: "Stackoverflow",
+        url: "https://stackoverflow.com/search?q={}",
+        urlWithNoArg: "https://stackoverflow.com/questions"
+    },
+    {
+        identifier: "reddit",
+        aliases: [
+            "redit",
+            "red",
+            "forum"
+        ],
+        name: "Reddit",
+        url: "https://www.reddit.com/search/?q={}",
+        urlWithNoArg: "https://www.reddit.com/r/popular/"
+    },
     {
         identifier: "crunchyroll",
         aliases: [
@@ -89,8 +140,7 @@ export const rules: Array<Rule> = [
             "chatgpt"
         ],
         name: "Mammouth ai",
-        url: "https://mammouth.ai/app/", // TODO: To complete
-        urlWithNoArg: "https://mammouth.ai/app/"
+        url: "https://mammouth.ai/app/a/default",
     },
     {
         identifier: "crate",

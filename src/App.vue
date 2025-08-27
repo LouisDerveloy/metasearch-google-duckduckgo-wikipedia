@@ -3,7 +3,7 @@ import {RouterView} from "vue-router";
 </script>
 
 <template>
-  <section class="w-screen flex flex-col">
+  <section class="w-screen flex flex-col dark:bg-stone-800 dark:text-stone-50">
     <RouterView/>
   </section>
 </template>

@@ -11,7 +11,7 @@ export function parse_query(query: string): { identifier: string, arg?: string }
         let identifier = _query.slice(undefined, arg_start)
         let arg = _query.slice(arg_start + 1, undefined)
 
-        //TODO: Encode arg to be safe in the url
+        arg = encodeURIComponent(arg)
 
         return {identifier: identifier, arg: arg}
     }
