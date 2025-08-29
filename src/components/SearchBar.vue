@@ -2,16 +2,17 @@
 import {onMounted, ref} from "vue";
 import {parse_query} from "../Utils/parsing.ts";
 import {rules} from "../config.ts";
-import {useRouter} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 
 const router = useRouter();
+const route = useRoute();
 
 const props = defineProps<{
   autofocus?: boolean,
 }>();
 
-let search_input = ref("");
-let error = ref("")
+let search_input = ref(route.query.hasOwnProperty("search") ? decodeURIComponent(route.query.search! as string) : "");
+let error = ref("");
 
 function search() {
   error.value = "";
@@ -25,8 +26,7 @@ function search() {
 
     document.location = buildUrl(ruleIndex, arg);
   } else {
-    console.log(search_input.value);
-    console.dir(rules);
+    router.push({name: "results", query: { search: encodeURIComponent(search_input.value) }, force: true, replace: false });
   }
 }
 
@@ -49,7 +49,6 @@ function buildUrl(ruleIndex: number, arg?: string) {
   }
 }
 
-// TODO: Faire la recherche en fonction des argument avec le moteur de recherche Google, Duckduckgo, wikipedia...
 
 let autocompletion: Array<string> = [];
 let autocompletion_display = ref<Array<string>>([]);

@@ -27,6 +27,17 @@ export const rules: Array<Rule> = [
         urlWithNoArg: "https://duckduckgo.com/?t=ffab"
     },
     {
+        identifier: "githubstars",
+        aliases: [
+            "stars",
+            "starsrepo",
+            "repostars"
+        ],
+        name: "Github repositories with stars",
+        url: "https://github.com/LouisDerveloy?submit=Search&q={}&tab=stars&type&sort&direction&submit=Search",
+        urlWithNoArg: "https://github.com/LouisDerveloy?tab=stars"
+    },
+    {
         identifier: "youtube",
         name: "Youtube Search",
         aliases: [
