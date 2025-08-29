@@ -51,6 +51,8 @@ function buildUrl(ruleIndex: number, arg?: string) {
 
 
 let autocompletion: Array<string> = [];
+autocompletion.toString(); // Just to erase the unused error
+
 let autocompletion_display = ref<Array<string>>([]);
 let autocompletion_index = ref<number>(-1)
 

@@ -3,19 +3,13 @@ import SearchBar from "../components/SearchBar.vue";
 import WebsiteResult from "../components/WebsiteResult.vue";
 import DarkModeButton from "../components/DarkModeButton.vue";
 import {useRoute} from "vue-router";
-import {onMounted, ref, watch} from "vue";
+import { ref, watch} from "vue";
 import type {EngineResponse, SearchResponse, SearchResult} from "../types/search.ts";
 
 const route = useRoute();
 
 const searching = ref(false);
-const results = ref<Array<{
-  title: string;
-  description: string;
-  url: string;
-  ads: boolean;
-  searchEngine: string;
-}>>([]);
+const results = ref<Array<SearchResult>>([]);
 
 watch(route, search, { immediate: true });
 
@@ -40,7 +34,7 @@ async function search() {
 
   const data = (await response.json()) as SearchResponse;
 
-  results.value = fuzeResult(data.engines_responses);
+  results.value = fuzeResult(data.engines_responses) as Array<SearchResult>;
 
   function fuzeResult(responses: Array<EngineResponse>) {
     const validResults = responses
