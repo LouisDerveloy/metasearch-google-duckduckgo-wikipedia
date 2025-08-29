@@ -22,7 +22,7 @@ const router = createRouter({
 });
 
 
-router.afterEach((to, from, failure) => {
+router.afterEach((to, _from, _failure) => {
     const title = (to.meta?.title as string) ?? "Search Engine";
     document.title = title;
 })
