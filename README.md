@@ -1,1 +1,1 @@
-This project is a metasearch engine. It merge the result from google, duckduckgo and wikipedia. Plus it provide shortcut through the "!" shortcut. By typing !youtube \<your search\> you can automaticly go to https://www.youtube.com/search?q=\<your search\>.
+This project is a metasearch engine. It merge the result from google, duckduckgo and wikipedia. Plus it provide shortcut through the "!" shortcut. By typing !youtube \<your search\> you can automaticly go to https://www.youtube.com/search?q=<your search\>.
