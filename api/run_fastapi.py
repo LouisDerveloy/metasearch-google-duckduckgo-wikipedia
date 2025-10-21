@@ -1,16 +1,45 @@
+import logging
+import os
+import sys
+import time
 import urllib.parse
+from pathlib import Path
 
+import uvicorn
+from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from dotenv import load_dotenv
-from os import getenv
-import time
+
 
 # Charger les variables d'environnement
 load_dotenv('.env.local')
 
 from models.search import SearchRequest, SearchResponse, EngineResponse, SearchEngine
 from engines import engine_manager
+
+
+def setup_logging():
+    """Configuration du logging pour FastAPI"""
+    log_dir = Path(__file__).parent / "logs"
+    log_dir.mkdir(exist_ok=True)
+
+    # Configuration du logging
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        handlers=[
+            logging.FileHandler(log_dir / 'fastapi.log', encoding='utf-8'),
+            logging.StreamHandler(sys.stdout)  # Aussi dans stdout pour le service
+        ]
+    )
+
+    # Logger spécialisé
+    logger = logging.getLogger('MetasearchAPI')
+    return logger
+
+
+# Setup initial
+logger = setup_logging()
 
 app = FastAPI()
 
@@ -33,6 +62,7 @@ app.add_middleware(
         "X-Requested-With"
     ],
 )
+
 
 @app.get("/api")
 async def root():
@@ -113,6 +143,7 @@ async def test_engine(engine_name: str):
         "result": result
     }
 
+
 @app.get("/api/engines/{engine_name}/config")
 async def check_engine_config(engine_name: str):
     """Vérifier la configuration détaillée d'un moteur"""
@@ -171,7 +202,38 @@ async def check_engine_config(engine_name: str):
     }
 
 
+def main():
+    """Point d'entrée principal pour FastAPI"""
+    try:
+        # Configuration du serveur
+        host = "127.0.0.1"
+        port = int(os.getenv("PORT", 8000))
+
+        # Déterminer si on tourne comme service ou en mode dev
+        running_as_service = os.getenv("RUNNING_AS_SERVICE", "0") == "1"
+
+        if running_as_service:
+            logger.info(f"🚀 Démarrage FastAPI en mode SERVICE sur {host}:{port}")
+            uvicorn_log_level = "warning"  # Moins verbeux pour le service
+        else:
+            logger.info(f"🚀 Démarrage FastAPI en mode DEV sur {host}:{port}")
+            uvicorn_log_level = "info"
+
+        # Démarrer uvicorn
+        uvicorn.run(
+            app,
+            host=host,
+            port=port,
+            reload=False,  # Pas de reload en service
+            access_log=True,
+            log_level=uvicorn_log_level,
+            loop="asyncio"
+        )
+
+    except Exception as e:
+        logger.error(f"❌ Erreur lors du démarrage de FastAPI: {e}")
+        sys.exit(1)
+
 
 if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=int(getenv("PORT")))
+    main()
